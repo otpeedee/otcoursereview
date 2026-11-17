@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Browse OT student reviews of Penn courses.">
+<title>OT Course Review</title>
+<link rel="stylesheet" href="styles.css">
+<script type="module" src="app.js"></script>
+</head>
+<body>
+<header><div class="wrap bar"><a class="brand" href="./"><span class="mark">OT</span> Course Review</a><span class="archive">PENN COURSE ARCHIVE</span></div></header>
+<main class="wrap">
+<section class="hero" aria-labelledby="page-title">
+<div><h1 id="page-title">Find your next<br><em>Penn course.</em></h1><p>Read what OT members said about the classes they took.</p></div>
+<div class="stats" aria-label="Archive totals"><div><strong id="total-courses">—</strong><span>Courses</span></div><div><strong id="total-reviews">—</strong><span>Student reviews</span></div></div>
+</section>
+<form class="filters" role="search" id="filters">
+<label class="search">Search courses
+<input id="query" type="search" placeholder="Course code, title, or instructor…"></label>
+<label>Department<select id="department"><option value="">All departments</option></select></label>
+<label>Course type<select id="type"><option value="">All types</option><option>Technical Elective</option><option>SSH Elective</option><option>Core</option></select></label>
+</form>
+<section aria-labelledby="results-title">
+<div class="results-head"><h2 id="results-title">Browse courses</h2><span id="count" aria-live="polite">Loading…</span></div>
+<div id="results" class="results"></div>
+<button id="more" type="button" hidden>Show more courses</button>
+</section>
+</main>
+<footer class="wrap"><span>OT Course Review</span></footer>
+</body>
+</html>
