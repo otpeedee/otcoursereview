@@ -28,7 +28,9 @@ function showCourse(course, reviews) {
   card.append(summary);
   for (const review of reviews) {
     const article = document.createElement('article');
-    if (review.instructor) article.append(element('h3', review.instructor));
+    const reviewer = review.reviewer?.trim();
+    article.append(element('h3', reviewer ? `Reviewed by ${reviewer}` : 'Reviewer name not provided'));
+    if (review.instructor) article.append(element('small', `Instructor: ${review.instructor}`));
     const metadata = [[review.term, review.year].filter(Boolean).join(' '), ...review.types].filter(Boolean);
     if (metadata.length) article.append(element('small', metadata.join(' · ')));
     article.append(element('p', review.review));
@@ -58,10 +60,7 @@ function render() {
   more.hidden = matches.length <= limit;
 }
 
-async function start() {
-  const response = await fetch('./reviews.json');
-  if (!response.ok) throw new Error('Unable to load reviews');
-  const reviews = await response.json();
+function start(reviews) {
   const collator = new Intl.Collator(undefined, {numeric:true});
   reviews.sort((a, b) => collator.compare(a.code, b.code));
   for (const review of reviews) {
@@ -96,7 +95,38 @@ async function start() {
   render();
 }
 
-start().catch(() => {
-  count.textContent = '';
-  results.append(element('p', 'The reviews could not be loaded. Refresh the page to try again.'));
+const unlock = document.querySelector('#unlock');
+const password = document.querySelector('#password');
+const unlockStatus = document.querySelector('#unlock-status');
+const submit = unlock.querySelector('button');
+
+unlock.addEventListener('submit', async event => {
+  event.preventDefault();
+  submit.disabled = true;
+  unlockStatus.textContent = 'Unlocking reviews…';
+  try {
+    const response = await fetch('https://ot-penn-course-reviews.tweedyode3.chatgpt.site/pages-reviews', {
+      method: 'POST',
+      body: new URLSearchParams({password: password.value}),
+      credentials: 'omit',
+      redirect: 'error',
+      cache: 'no-store',
+    });
+    if (response.status === 401) {
+      unlockStatus.textContent = 'Incorrect password. Try again.';
+      password.select();
+      return;
+    }
+    if (!response.ok) throw new Error('Unable to load reviews');
+    start(await response.json());
+    unlock.reset();
+    unlock.hidden = true;
+    document.querySelector('#browse').hidden = false;
+    document.querySelector('#stats').hidden = false;
+    query.focus();
+  } catch {
+    unlockStatus.textContent = 'The reviews could not be loaded. Try again in a moment.';
+  } finally {
+    submit.disabled = false;
+  }
 });

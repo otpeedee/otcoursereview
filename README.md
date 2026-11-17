@@ -1,7 +1,5 @@
 # OT Course Review
 
-A static course-review site for browsing Penn courses by department and course type, and searching by course code, title, or instructor.
+A GitHub Pages frontend for browsing Penn courses by department and course type, and searching by course code, title, or instructor.
 
-Run `python3 -m http.server 8000` from the repository root and open `http://localhost:8000`.
-
-`reviews.json` starts empty. To populate an authorized deployment, supply a JSON array of review objects. Use string fields `code`, `title`, `instructor`, `year`, `term`, and `review`, plus a `types` array of strings. Supported types are `Core`, `Technical Elective`, and `SSH Elective`.
+Publish the root of `main` with GitHub Pages. The password form sends a POST to the backend, which validates the password before returning the latest reviews. The backend permits browser requests from `https://otpeedee.github.io`. A local static server can preview the layout.

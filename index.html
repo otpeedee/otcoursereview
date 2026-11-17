@@ -13,8 +13,15 @@
 <main class="wrap">
 <section class="hero" aria-labelledby="page-title">
 <div><h1 id="page-title">Find your next<br><em>Penn course.</em></h1><p>Read what OT members said about the classes they took.</p></div>
-<div class="stats" aria-label="Archive totals"><div><strong id="total-courses">—</strong><span>Courses</span></div><div><strong id="total-reviews">—</strong><span>Student reviews</span></div></div>
+<div class="stats" id="stats" aria-label="Archive totals" hidden><div><strong id="total-courses">—</strong><span>Courses</span></div><div><strong id="total-reviews">—</strong><span>Student reviews</span></div></div>
 </section>
+<form id="unlock" class="unlock">
+<label for="password">Site password</label>
+<input id="password" type="password" autocomplete="current-password" required>
+<button type="submit">Unlock reviews</button>
+<p id="unlock-status" role="status"></p>
+</form>
+<div id="browse" hidden>
 <form class="filters" role="search" id="filters">
 <label class="search">Search courses
 <input id="query" type="search" placeholder="Course code, title, or instructor…"></label>
@@ -22,10 +29,11 @@
 <label>Course type<select id="type"><option value="">All types</option><option>Technical Elective</option><option>SSH Elective</option><option>Core</option></select></label>
 </form>
 <section aria-labelledby="results-title">
-<div class="results-head"><h2 id="results-title">Browse courses</h2><span id="count" aria-live="polite">Loading…</span></div>
+<div class="results-head"><h2 id="results-title">Browse courses</h2><span id="count" aria-live="polite"></span></div>
 <div id="results" class="results"></div>
 <button id="more" type="button" hidden>Show more courses</button>
 </section>
+</div>
 </main>
 <footer class="wrap"><span>OT Course Review</span></footer>
 </body>
